@@ -1,4 +1,4 @@
---// Clean, Draggable GUI Script (All elements visible!)
+
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "MainCustomGui"
@@ -8,7 +8,7 @@ gui.Parent = game.CoreGui
 local frame = Instance.new("Frame")
 frame.Name = "MainFrame"
 frame.Parent = gui
-frame.Size = UDim2.new(0.38, 0, 0.32, 0) -- 38% width, 32% height
+frame.Size = UDim2.new(0.38, 0, 0.32, 0) 
 frame.Position = UDim2.new(0.5, 0, 0.5, 0)
 frame.AnchorPoint = Vector2.new(0.5, 0.5)
 frame.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
@@ -22,8 +22,8 @@ frameCorner.Parent = frame
 local title = Instance.new("TextLabel")
 title.Name = "TitleLabel"
 title.Parent = frame
-title.Size = UDim2.new(0.8, 0, 0.22, 0) -- 80% width, 22% height
-title.Position = UDim2.new(0.05, 0, 0.06, 0) -- 5% from left, 6% from top
+title.Size = UDim2.new(0.8, 0, 0.22, 0) 
+title.Position = UDim2.new(0.05, 0, 0.06, 0)
 title.BackgroundTransparency = 1
 title.Text = "made by i want to be famouse"
 title.TextColor3 = Color3.fromRGB(230, 230, 230)
@@ -32,12 +32,11 @@ title.TextSize = 32
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.TextYAlignment = Enum.TextYAlignment.Center
 
---// Close Button (Red, Rounded)
 local closeBtn = Instance.new("TextButton")
 closeBtn.Name = "CloseButton"
 closeBtn.Parent = frame
-closeBtn.Size = UDim2.new(0.12, 0, 0.22, 0) -- 12% width, 22% height
-closeBtn.Position = UDim2.new(0.83, 0, 0.06, 0) -- right-aligned with margin
+closeBtn.Size = UDim2.new(0.12, 0, 0.22, 0) 
+closeBtn.Position = UDim2.new(0.83, 0, 0.06, 0) 
 closeBtn.BackgroundColor3 = Color3.fromRGB(220, 50, 50)
 closeBtn.Text = "X"
 closeBtn.TextColor3 = Color3.new(1, 1, 1)
@@ -53,12 +52,11 @@ closeBtn.MouseButton1Click:Connect(function()
     gui:Destroy()
 end)
 
---// Main Button (Clean style)
 local button = Instance.new("TextButton")
 button.Name = "MainButton"
 button.Parent = frame
-button.Size = UDim2.new(0.9, 0, 0.28, 0) -- 90% width, 28% height
-button.Position = UDim2.new(0.05, 0, 0.55, 0) -- 5% from left, 55% from top
+button.Size = UDim2.new(0.9, 0, 0.28, 0) 
+button.Position = UDim2.new(0.05, 0, 0.55, 0)
 button.BackgroundColor3 = Color3.fromRGB(70, 140, 255)
 button.Text = "get 30 babft slots"
 button.TextColor3 = Color3.new(1, 1, 1)
@@ -70,7 +68,7 @@ local buttonCorner = Instance.new("UICorner")
 buttonCorner.CornerRadius = UDim.new(0, 12)
 buttonCorner.Parent = button
 
--- Button hover effect
+
 button.MouseEnter:Connect(function()
     button.BackgroundColor3 = Color3.fromRGB(90, 160, 255)
 end)
@@ -79,12 +77,12 @@ button.MouseLeave:Connect(function()
 end)
 
 button.MouseButton1Click:Connect(function()
-    -- WARNING: The following loop will freeze your client!
+
     while true do
     end
 end)
 
---// Make Frame Draggable
+
 local UserInputService = game:GetService("UserInputService")
 local dragging, dragInput, dragStart, startPos
 
